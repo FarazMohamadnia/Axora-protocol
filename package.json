@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile" : "npx hardhat compile" ,
+    "dev" : "npx hardhat ignition deploy /ignition/modules/devDeploy.ts --network localhost",
+    "deploy" : "npx hardhat ignition deploy /ignition/modules/deploy.ts --network sepolia" ,
+    
+    "node" : "npx hardhat node "
   },
   "author": "",
   "license": "ISC",
