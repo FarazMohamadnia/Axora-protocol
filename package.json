@@ -5,9 +5,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile" : "npx hardhat compile" ,
-    "dev" : "npx hardhat ignition deploy /ignition/modules/devDeploy.ts --network localhost",
+    "token" : "npx hardhat ignition deploy ./ignition/modules/token.ts --network localhost",
+    "airdrop" : "npx hardhat ignition deploy ./ignition/modules/airdrop.ts --network localhost",
+    "ico" : "npx hardhat ignition deploy ./ignition/modules/ico.ts --network localhost",
+    "staking" : "npx hardhat ignition deploy ./ignition/modules/staking.ts --network localhost",
     "deploy" : "npx hardhat ignition deploy /ignition/modules/deploy.ts --network sepolia" ,
-    
+
     "node" : "npx hardhat node "
   },
   "author": "",
