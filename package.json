@@ -4,14 +4,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile" : "npx hardhat compile" ,
-    "token" : "npx hardhat ignition deploy ./ignition/modules/token.ts --network localhost",
-    "airdrop" : "npx hardhat ignition deploy ./ignition/modules/airdrop.ts --network localhost",
-    "ico" : "npx hardhat ignition deploy ./ignition/modules/ico.ts --network localhost",
-    "staking" : "npx hardhat ignition deploy ./ignition/modules/staking.ts --network localhost",
-    "deploy" : "npx hardhat ignition deploy /ignition/modules/deploy.ts --network sepolia" ,
-
-    "node" : "npx hardhat node "
+    "compile": "npx hardhat compile",
+    "token": "npx hardhat ignition deploy ./ignition/modules/token.ts --network localhost",
+    "airdrop": "npx hardhat ignition deploy ./ignition/modules/airdrop.ts --network localhost",
+    "ico": "npx hardhat ignition deploy ./ignition/modules/ico.ts --network localhost",
+    "staking": "npx hardhat ignition deploy ./ignition/modules/staking.ts --network localhost",
+    "deploy": "npx hardhat ignition deploy /ignition/modules/deploy.ts --network sepolia",
+    "node": "npx hardhat node "
   },
   "author": "",
   "license": "ISC",
@@ -33,6 +32,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@openzeppelin/contracts": "^5.4.0",
     "dotenv": "^17.2.1"
   }
 }
