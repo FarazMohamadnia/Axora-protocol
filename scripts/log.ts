@@ -155,8 +155,6 @@ async function address() {
     });
   }
 
-  console.log(users);
-
   const addressData = {
     users,
     timestamp: new Date().toISOString(),

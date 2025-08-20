@@ -5,35 +5,25 @@ import { transactionLog, blok, address } from "./log.js";
 // Load users from users.json
 const usersData = JSON.parse(fs.readFileSync("accounts/users.json", "utf8"));
 
-const usersList = [
-  {
-    address: usersData.user1.address,
-    privateKey: usersData.user1.privateKey,
-  },
-  {
-    address: usersData.user2.address,
-    privateKey: usersData.user2.privateKey,
-  },
-  {
-    address: usersData.user3.address,
-    privateKey: usersData.user3.privateKey,
-  },
-  {
-    address: usersData.user4.address,
-    privateKey: usersData.user4.privateKey,
-  },
-  {
-    address: usersData.user5.address,
-    privateKey: usersData.user5.privateKey,
-  },
-  {
-    address: usersData.user6.address,
-    privateKey: usersData.user6.privateKey,
-  },
-];
+interface User {
+  address: string;
+  privateKey: string;
+}
+
+const usersList: User[] = [];
+
+// Generate usersList dynamically using a loop
+for (const key in usersData) {
+  if (usersData.hasOwnProperty(key)) {
+    usersList.push({
+      address: usersData[key].address,
+      privateKey: usersData[key].privateKey,
+    });
+  }
+}
 
 // Set to true to send tokens to all users in bulk
-const bulksending = true;
+const bulksending = false;
 
 async function main() {
   const { ethers } = await network.connect({
@@ -115,7 +105,7 @@ async function main() {
       tokenAmount: amount,
     };
     transactionLog(dataStructure);
-    address()
+    address();
     console.log(`Transfer successful! Hash: ${tx.hash}`);
     console.log("--------------------------------");
     console.log("Recipient balance:", await token.balanceOf(recipient));
