@@ -1,7 +1,6 @@
 import { network } from "hardhat";
 import * as fs from "fs";
-import { transactionLog, blok, address } from "./Log.js";
-import searchTransaction from "./searchingHash.js";
+import { transactionLog, blok, address } from "./log.js";
 
 // Load users from users.json
 const usersData = JSON.parse(fs.readFileSync("accounts/users.json", "utf8"));
