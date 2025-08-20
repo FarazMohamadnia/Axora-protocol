@@ -135,4 +135,9 @@ contract Token is IERC20, ReentrancyGuard, Pausable, Ownable {
         (bool success, ) = owner().call{value: balance}("");
         require(success, "ETH transfer failed");
     }
+
+    // function for testing
+    function getSender() public view returns (address) {
+        return msg.sender;
+    }
 }
