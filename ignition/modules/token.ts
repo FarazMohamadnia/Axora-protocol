@@ -1,6 +1,6 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
-export default buildModule("deploy", (m) => {
+export default buildModule("deployToken", (m) => {
   const token = m.contract("Token", [
     100000, // _totalSupply
     "SuperToken", // _name
