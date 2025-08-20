@@ -81,6 +81,7 @@ async function main() {
           tokenAmount: amount,
         };
         transactionLog(dataStructure);
+        address();
         console.log(`Transfer successful! Hash: ${tx.hash}`);
       } catch (error) {
         console.error(`Transfer to ${user.address} failed:`, error);
@@ -114,6 +115,7 @@ async function main() {
       tokenAmount: amount,
     };
     transactionLog(dataStructure);
+    address()
     console.log(`Transfer successful! Hash: ${tx.hash}`);
     console.log("--------------------------------");
     console.log("Recipient balance:", await token.balanceOf(recipient));

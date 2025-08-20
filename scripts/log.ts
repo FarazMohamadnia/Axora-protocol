@@ -1,7 +1,14 @@
+import { network } from "hardhat";
 import * as fs from "fs/promises";
 import * as path from "path";
 import { fileURLToPath } from "url";
 
+const { ethers } = await network.connect({
+  network: "localhost",
+  chainType: "l1",
+});
+
+const usersData = JSON.parse(await fs.readFile("accounts/users.json", "utf8"));
 
 // Get current directory for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -63,6 +70,47 @@ async function appendToJsonFile(filePath: string, data: any) {
   }
 }
 
+// Function to update existing data in the JSON file (only for address function)
+async function updateJsonFile(filePath: string, data: any) {
+  try {
+    await ensureDirectoryExists(filePath);
+    await initializeJsonFile(filePath);
+
+    let jsonData = [];
+    try {
+      const fileContent = await fs.readFile(filePath, "utf-8");
+      jsonData = JSON.parse(fileContent);
+    } catch {
+      // If file is corrupted, start with empty array
+      jsonData = [];
+    }
+
+    // Update existing entries or add new ones
+    for (const newUser of data.users) {
+      const existingIndex = jsonData.findIndex(
+        (user: any) => user.address === newUser.address
+      );
+      if (existingIndex !== -1) {
+        // Update existing user's balances
+        jsonData[existingIndex].tokenBalance = newUser.tokenBalance;
+        jsonData[existingIndex].ethBalance = newUser.ethBalance;
+        jsonData[existingIndex].lastUpdated = new Date().toISOString();
+      } else {
+        // Add new user if not exists
+        jsonData.push({
+          ...newUser,
+          lastUpdated: new Date().toISOString(),
+        });
+      }
+    }
+
+    await fs.writeFile(filePath, JSON.stringify(jsonData, null, 2));
+    console.log(`Data successfully updated in ${filePath}`);
+  } catch (error) {
+    console.error(`Error updating JSON file (${filePath}):`, error);
+  }
+}
+
 // Function to log transaction
 async function transactionLog(tx: any) {
   const transactionData = {
@@ -88,13 +136,33 @@ async function blok(blokData: any) {
   await appendToJsonFile(BLOCK_FILE_PATH, blockData);
 }
 
-async function address(accountData: any) {
+async function address() {
+  const token = await ethers.getContractAt(
+    "Token",
+    "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+  );
+  const users = [];
+
+  for (const key in usersData) {
+    const user = usersData[key];
+    const ethBalance = await ethers.provider.getBalance(user.address);
+    const tokenBalance = await token.balanceOf(user.address);
+    users.push({
+      name: key,
+      address: user.address,
+      tokenBalance: tokenBalance.toString(), // Convert BigInt to string
+      ethBalance: ethers.formatEther(ethBalance),
+    });
+  }
+
+  console.log(users);
+
   const addressData = {
-    address: accountData.address,
+    users,
     timestamp: new Date().toISOString(),
   };
 
-  await appendToJsonFile(ADDRESS_FILE_PATH, addressData);
+  await updateJsonFile(ADDRESS_FILE_PATH, addressData);
+  console.log("Address data logged successfully");
 }
-
 export { transactionLog, blok, address };

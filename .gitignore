@@ -20,3 +20,5 @@
 /coverage 
 
 .env
+
+task.txt
