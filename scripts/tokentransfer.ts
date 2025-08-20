@@ -1,5 +1,7 @@
 import { network } from "hardhat";
 import * as fs from "fs";
+import { transactionLog, blok, address } from "./Log.js";
+import searchTransaction from "./searchingHash.js";
 
 // Load users from users.json
 const usersData = JSON.parse(fs.readFileSync("accounts/users.json", "utf8"));
@@ -32,7 +34,7 @@ const usersList = [
 ];
 
 // Set to true to send tokens to all users in bulk
-const bulksending = true;
+const bulksending = false;
 
 async function main() {
   const { ethers } = await network.connect({
@@ -81,15 +83,31 @@ async function main() {
       console.log("--------------------------------");
     }
   } else {
-    // change signer to user3
-    const senderWallet = new ethers.Wallet(usersData.user3.privateKey);
+    // change signer to user2 (you can change this to any user)
+    const senderWallet = new ethers.Wallet(usersData.user1.privateKey);
     const sender = senderWallet.connect(ethers.provider);
+    const tokenWithSigner = token.connect(sender); // Connect sender wallet to token contract
+
+    const amount = 50; // change amount
+    const recipient = usersList[5].address; // change recipient to user6
     // add amount and address to send tokens
-    const tx = await token.transfer(usersList[4].address, 127);
-    await tx.wait();
+    const tx = await tokenWithSigner.transfer(recipient, amount);
+    const receipt = await tx.wait();
+    const dataStructure = {
+      hash: tx.hash,
+      blockNumber: receipt?.blockNumber,
+      gasUsed: receipt?.gasUsed?.toString() || "0",
+      status: receipt?.status,
+      from: receipt?.from,
+      to: receipt?.to,
+      tokenAmount: amount,
+    };
+    transactionLog(dataStructure);
     console.log(`Transfer successful! Hash: ${tx.hash}`);
     console.log("--------------------------------");
-    console.log("User balance:", await token.balanceOf(usersList[4].address));
+    console.log("Recipient balance:", await token.balanceOf(recipient));
+    console.log("Sender balance:", await token.balanceOf(sender.address));
+
     console.log("--------------------------------");
   }
 }
