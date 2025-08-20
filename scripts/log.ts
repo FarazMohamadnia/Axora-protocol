@@ -79,18 +79,18 @@ async function transactionLog(tx: any) {
   await appendToJsonFile(TRANSACTION_FILE_PATH, transactionData);
 }
 
-async function blok(blockNumber: number) {
+async function blok(blokData: any) {
   const blockData = {
-    blockNumber,
+    blockNumber: blokData.blockNumber,
     timestamp: new Date().toISOString(),
   };
 
   await appendToJsonFile(BLOCK_FILE_PATH, blockData);
 }
 
-async function address(account: string) {
+async function address(accountData: any) {
   const addressData = {
-    address: account,
+    address: accountData.address,
     timestamp: new Date().toISOString(),
   };
 

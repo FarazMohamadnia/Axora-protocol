@@ -33,7 +33,7 @@ const usersList = [
 ];
 
 // Set to true to send tokens to all users in bulk
-const bulksending = false;
+const bulksending = true;
 
 async function main() {
   const { ethers } = await network.connect({
@@ -67,8 +67,20 @@ async function main() {
     for (const user of usersList) {
       try {
         console.log(`Transferring 100 tokens to ${user.address}...`);
-        const tx = await token.transfer(user.address, 100);
+        const amount = 100;
+        const tx = await token.transfer(user.address, amount);
         await tx.wait();
+        const receipt = await tx.wait();
+        const dataStructure = {
+          hash: tx.hash,
+          blockNumber: receipt?.blockNumber,
+          gasUsed: receipt?.gasUsed?.toString() || "0",
+          status: receipt?.status,
+          from: receipt?.from,
+          to: receipt?.to,
+          tokenAmount: amount,
+        };
+        transactionLog(dataStructure);
         console.log(`Transfer successful! Hash: ${tx.hash}`);
       } catch (error) {
         console.error(`Transfer to ${user.address} failed:`, error);
