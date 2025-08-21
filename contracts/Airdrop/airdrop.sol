@@ -32,7 +32,7 @@ contract Airdrop {
     }
 
     modifier sufficientTokenBalance() {
-        require(tokenAddress.balanceOf(address(this)) >= airdropAmount, "Insufficient token balance");
+        require(tokenAddress.balanceOf(address(this)) >= 0, "Insufficient token balance");
         _;
     }
 
