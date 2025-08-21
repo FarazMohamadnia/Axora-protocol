@@ -31,6 +31,11 @@ contract Airdrop {
         _;
     }
 
+    modifier sufficientTokenBalance() {
+        require(tokenAddress.balanceOf(address(this)) >= airdropAmount, "Insufficient token balance");
+        _;
+    }
+
     modifier endAirdrop() {
         require(totalAmount == 0, "Airdrop has ended");
         _;
@@ -73,15 +78,10 @@ contract Airdrop {
         airdropAmount = _airdropAmount;
         startTime = _startTime;
         endTime = _endTime;
-
-        require(
-            tokenAddress.transferFrom(msg.sender, address(this), _totalAmount),
-            "Token transfer failed"
-        );
+ 
     }
 
-    
-
+    // Add user to airdrop
     function addUser(address _user) external onlyOwner airdropNotStarted {
         require(users[_user].amount == 0, "User already exists");
         require(users[_user].isClaimed == false, "User is already claimed");
@@ -91,8 +91,10 @@ contract Airdrop {
         userList.push(User(airdropAmount, false, _user));
     }
 
+
+
     // Get Airdrop
-    function airdrop() external onlyUser airdropActive {
+    function airdrop() external onlyUser airdropActive sufficientTokenBalance {
         users[msg.sender] = User(airdropAmount, true, msg.sender);
         require(
             tokenAddress.transfer(msg.sender, airdropAmount),
