@@ -1,9 +1,17 @@
 import { network } from "hardhat";
 import * as fs from "fs";
 import { transactionLog, blok, address } from "./log.js";
+import * as dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config();
 
 // Load users from users.json
 const usersData = JSON.parse(fs.readFileSync("accounts/users.json", "utf8"));
+
+// Get token address from environment variable
+const TOKEN_ADDRESS =
+  process.env.TOKEN_ADDRESS || "";
 
 interface User {
   address: string;
@@ -34,10 +42,7 @@ async function main() {
   const [sender] = await ethers.getSigners();
 
   // Get the token contract
-  const token = await ethers.getContractAt(
-    "Token",
-    "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
-  );
+  const token = await ethers.getContractAt("Token", TOKEN_ADDRESS);
 
   console.log("Token contract name:", await token.name());
   console.log("Token contract symbol:", await token.symbol());

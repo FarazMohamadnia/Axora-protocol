@@ -2,6 +2,10 @@ import { network } from "hardhat";
 import * as fs from "fs/promises";
 import * as path from "path";
 import { fileURLToPath } from "url";
+import * as dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config();
 
 const { ethers } = await network.connect({
   network: "localhost",
@@ -9,6 +13,9 @@ const { ethers } = await network.connect({
 });
 
 const usersData = JSON.parse(await fs.readFile("accounts/users.json", "utf8"));
+
+// Get token address from environment variable
+const TOKEN_ADDRESS = process.env.TOKEN_ADDRESS || "";
 
 // Get current directory for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -137,10 +144,7 @@ async function blok(blokData: any) {
 }
 
 async function address() {
-  const token = await ethers.getContractAt(
-    "Token",
-    "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
-  );
+  const token = await ethers.getContractAt("Token", TOKEN_ADDRESS);
   const users = [];
 
   for (const key in usersData) {
