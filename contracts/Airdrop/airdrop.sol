@@ -7,9 +7,9 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 contract Airdrop {
     address public immutable owner;
     uint256 public immutable airdropAmount;
-    uint256 public totalAmount;
     uint256 public immutable startTime;
     uint256 public immutable endTime;
+    uint256 public totalAmount;
     IERC20 public immutable tokenAddress;
     
 
@@ -32,7 +32,7 @@ contract Airdrop {
     }
 
     modifier sufficientTokenBalance() {
-        require(tokenAddress.balanceOf(address(this)) >= 0, "Insufficient token balance");
+        require(tokenAddress.balanceOf(address(this)) > 0, "Insufficient token balance");
         _;
     }
 
@@ -54,7 +54,7 @@ contract Airdrop {
     }
 
     modifier airdropNotStarted() {
-        require(block.timestamp < startTime, "Airdrop has already started");
+        require(endTime > startTime, "Airdrop has already started");
         _;
     }
 
@@ -63,20 +63,18 @@ contract Airdrop {
         address _tokenAddress, 
         uint256 _totalAmount, 
         uint256 _airdropAmount, 
-        uint256 _startTime, 
         uint256 _endTime
     ) {
-        require(_startTime > block.timestamp, "Start time must be in the future");
-        require(_endTime > _startTime, "End time must be after start time");
+        require(_endTime > block.timestamp, "End time must be after start time");
         require(_totalAmount > 0, "Total amount must be greater than 0");
         require(_airdropAmount > 0, "Airdrop amount must be greater than 0");
         require(_tokenAddress != address(0), "Invalid token address");
         
+        startTime = block.timestamp;
         owner = _owner;
         tokenAddress = IERC20(_tokenAddress);
         totalAmount = _totalAmount;
         airdropAmount = _airdropAmount;
-        startTime = _startTime;
         endTime = _endTime;
  
     }
