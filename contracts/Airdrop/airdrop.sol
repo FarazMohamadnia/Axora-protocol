@@ -23,6 +23,7 @@ contract Airdrop {
     User[] public userList;
 
     mapping(address => User) private users;
+    mapping(address => uint256) private userIndex;
 
     event Airdropped(address indexed user, uint256 amount);
 
@@ -85,6 +86,7 @@ contract Airdrop {
         require(users[_user].isClaimed == false, "User is already claimed");
 
         totalAmount -= airdropAmount;
+        userIndex[_user] = userList.length;
         users[_user] = User(airdropAmount, false, _user);
         userList.push(User(airdropAmount, false, _user));
     }
@@ -100,6 +102,31 @@ contract Airdrop {
         );
         emit Airdropped(msg.sender, airdropAmount);
     }
+
+
+    // delete user
+    function deleteUser(address _user) external onlyOwner {
+        require(users[_user].user == _user, "User not found");
+        require(users[_user].isClaimed == false, "User has already claimed"); 
+
+       
+        uint256 index = userIndex[_user];
+        require(index < userList.length, "Invalid user index");
+        require(userList[index].user == _user, "User index mismatch");
+
+       
+        if (index < userList.length - 1) {
+            userList[index] = userList[userList.length - 1];
+            userIndex[userList[index].user] = index; 
+        }
+        
+        userList.pop();
+        delete userIndex[_user]; 
+        delete users[_user];
+        totalAmount += airdropAmount; 
+
+    }
+
 
     // Get user details
     function getUser(address _user) external view onlyOwner returns (User memory) {
