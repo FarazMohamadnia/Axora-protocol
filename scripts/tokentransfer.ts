@@ -64,7 +64,6 @@ async function main() {
         console.log(`Transferring 100 tokens to ${user.address}...`);
         const amount = 100;
         const tx = await token.transfer(user.address, amount);
-        await tx.wait();
         const receipt = await tx.wait();
         const dataStructure = {
           hash: tx.hash,
