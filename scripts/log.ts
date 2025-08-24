@@ -123,7 +123,7 @@ async function transactionLog(tx: any) {
   const transactionData = {
     hash: tx.hash,
     blockNumber: tx.blockNumber,
-    gasUsed: tx.gasUsed.toString(),
+    gasUsed: tx?.gasUsed?.toString(),
     status: tx.status === 1 ? "Success" : "Failed",
     from: tx.from,
     to: tx.to,
