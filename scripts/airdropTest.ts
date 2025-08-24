@@ -95,12 +95,83 @@ const withdrawUser = async (userAddress: string) => {
 };
 
 // First send tokens to the airdrop contract, then add user and withdraw
-sendToken().then(() => {
-  addUser(usersList[3].address).then(() => {
-    withdrawUser(usersList[3].address);
-  });
-});
+// sendToken().then(() => {
+//   addUser(usersList[3].address).then(() => {
+// withdrawUser(usersList[3].address);
+//   });
+// });
 
 // Test 2
 
-console.log("➡️  Test 2 ================================= ");
+async function test2() {
+  console.log("➡️  Test 2 ================================= ");
+  const AirdropUserList = usersList.slice(0, 7);
+  console.log("➡️  AirdropUserList : ", AirdropUserList);
+
+  try {
+    await token.transfer(
+      process.env.AIRDROP_ADDRESS || "",
+      await airdrop.totalAmount()
+    );
+    console.log(
+      "✅  Send Token to Airdrop Contract : ",
+      await token.balanceOf(process.env.AIRDROP_ADDRESS || "")
+    );
+
+    for (const user of AirdropUserList) {
+      await addUser(user.address);
+    }
+    console.log(
+      "✅  All users added successfully!",
+      await airdrop.getUserList()
+    );
+    console.log(
+      "➡️  Total Airdrop : ",
+      await token.balanceOf(process.env.AIRDROP_ADDRESS || "")
+    );
+    const deleteUserList = AirdropUserList.slice(2, 6);
+    for (const user of deleteUserList) {
+      await airdrop.deleteUser(user.address);
+      console.log("✅  User ", user.address, " deleted successfully!");
+    }
+
+    const currentAirdropUsers = [];
+    for (const user of AirdropUserList) {
+      if (deleteUserList.find((u: any) => u.user != user.address)) {
+        currentAirdropUsers.push(user);
+      }
+    }
+    console.log("➡️  Current Airdrop Users : ", currentAirdropUsers);
+    
+    // Use Promise.all to handle all airdrop operations concurrently
+    const airdropPromises = currentAirdropUsers.map(async (user) => {
+      const userSigner = new ethers.Wallet(user.privateKey, ethers.provider);
+      const airdropWithUserSigner = airdrop.connect(userSigner);
+      await airdropWithUserSigner.airdrop();
+      console.log("✅  User ", user.address, " withdrawn successfully!");
+    });
+    try {
+        await Promise.all(airdropPromises);
+    
+    } catch (error) {
+        console.log('You are not a user of the airdrop');
+        
+    }
+    console.log(
+      "✅  All users withdrawn successfully!",
+      await airdrop.getUserList()
+    );
+    console.log(
+      "➡️  Total Airdrop : ",
+      await token.balanceOf(process.env.AIRDROP_ADDRESS || "")
+    );
+
+    for (const user of AirdropUserList) {
+      const balance = await token.balanceOf(user.address);
+      console.log("➡️  User ", user.address, " balance : ", balance);
+    }
+  } catch (err) {
+    console.log("➡️  ERROR  === TEST 2 : ", err);
+  }
+}
+test2();
