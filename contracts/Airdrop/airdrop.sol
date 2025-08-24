@@ -2,10 +2,13 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 
 
-contract Airdrop {
-    address public immutable owner;
+contract Airdrop is Ownable, ReentrancyGuard, Pausable {
     uint256 public immutable airdropAmount;
     uint256 public immutable startTime;
     uint256 public immutable endTime;
@@ -27,10 +30,9 @@ contract Airdrop {
 
     event Airdropped(address indexed user, uint256 amount);
 
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Only owner can call this function");
-        _;
-    }
+    // modifier onlyOwner() override {
+        // _;
+    // }
 
     modifier sufficientTokenBalance() {
         require(tokenAddress.balanceOf(address(this)) > 0, "Insufficient token balance");
@@ -60,24 +62,21 @@ contract Airdrop {
     }
 
     constructor(
-        address _owner, 
         address _tokenAddress, 
         uint256 _totalAmount, 
         uint256 _airdropAmount, 
         uint256 _endTime
-    ) {
+    ) Ownable(msg.sender) {
         require(_endTime > block.timestamp, "End time must be after start time");
         require(_totalAmount > 0, "Total amount must be greater than 0");
         require(_airdropAmount > 0, "Airdrop amount must be greater than 0");
         require(_tokenAddress != address(0), "Invalid token address");
         
         startTime = block.timestamp;
-        owner = _owner;
         tokenAddress = IERC20(_tokenAddress);
         totalAmount = _totalAmount;
         airdropAmount = _airdropAmount;
         endTime = _endTime;
- 
     }
 
     // Add user to airdrop
@@ -94,7 +93,7 @@ contract Airdrop {
 
 
     // Get Airdrop
-    function airdrop() external onlyUser airdropActive sufficientTokenBalance {
+    function airdrop() external onlyUser airdropActive sufficientTokenBalance whenNotPaused nonReentrant {
         users[msg.sender] = User(airdropAmount, true, msg.sender);
         require(
             tokenAddress.transfer(msg.sender, airdropAmount),
@@ -176,5 +175,30 @@ contract Airdrop {
             hasStarted ? 0 : startTime - block.timestamp,
             hasEnded ? 0 : endTime - block.timestamp
         );
+    }
+
+    // Emergency pause function
+    function pause() external onlyOwner {
+        _pause();
+    }
+
+    // Unpause function
+    function unpause() external onlyOwner {
+        _unpause();
+    }
+
+    // Emergency withdraw function for owner (only when paused)
+    function emergencyWithdraw() external onlyOwner whenPaused {
+        uint256 balance = tokenAddress.balanceOf(address(this));
+        require(balance > 0, "No tokens to withdraw");
+        require(
+            tokenAddress.transfer(owner(), balance),
+            "Token transfer failed"
+        );
+    }
+
+    // Get owner address
+    function getOwner() external view returns (address) {
+        return owner();
     }
 }
