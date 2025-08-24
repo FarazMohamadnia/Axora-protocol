@@ -22,7 +22,7 @@ contract AirdropTest is Test {
     function setUp() public {
         vm.startPrank(owner);
         token = new Token(INITIAL_SUPPLY, "SuperToken", "SUPER", 18);
-        airdrop = new Airdrop(owner, address(token), 100, 10  , block.timestamp + 3000);
+        airdrop = new Airdrop( address(token), 100, 10  , block.timestamp + 3000);
         require(token.transfer(address(airdrop), 100));
         vm.stopPrank();
     }
