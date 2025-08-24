@@ -119,7 +119,7 @@ contract Airdrop {
             userList[index] = userList[userList.length - 1];
             userIndex[userList[index].user] = index; 
         }
-        
+
         userList.pop();
         delete userIndex[_user]; 
         delete users[_user];
@@ -131,6 +131,11 @@ contract Airdrop {
     // Get user details
     function getUser(address _user) external view onlyOwner returns (User memory) {
         return users[_user];
+    }
+
+    // Get user list
+    function getUserList() external view onlyOwner returns (User[] memory) {
+        return userList;
     }
 
     // Check if airdrop is currently active
