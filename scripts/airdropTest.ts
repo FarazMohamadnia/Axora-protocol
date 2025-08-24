@@ -1,7 +1,7 @@
 import { network } from "hardhat";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
-import { transactionLog } from "./log.js";
+import { address, transactionLog } from "./log.js";
 
 dotenv.config();
 
@@ -70,6 +70,7 @@ const sendToken = async () => {
         tokenAmount: (await airdrop.totalAmount()).toString(),
       };
     transactionLog(dataStructure);
+    address();
   } catch (err) {
     console.log("➡️  sendToken Function Error : ", err);
   }
@@ -113,6 +114,7 @@ const withdrawUser = async (userAddress: string) => {
       tokenAmount: (await airdrop.airdropAmount()).toString(),
     };
     transactionLog(dataStructure);
+    address();
     console.log(`✅  User ${userAddress} withdrawn successfully!`);
   } catch (err) {
     console.log("➡️  withdrawUser Function Error : ", err);
@@ -153,6 +155,7 @@ async function test2() {
       tokenAmount: (await airdrop.totalAmount()).toString(),
     };
     transactionLog(dataStructure);
+    address();
     console.log(
       "✅  Send Token to Airdrop Contract : ",
       await token.balanceOf(process.env.AIRDROP_ADDRESS || "")
@@ -192,13 +195,14 @@ async function test2() {
       const dataStructure = {
         hash: tx.hash,
         blockNumber: receipt?.blockNumber,
-        gasUsed: receipt?.gasUsed?.toString() || "0",
+        gasUsed: receipt?.gasUsed?.toString() || "0", 
         status: receipt?.status,
         from: receipt?.from,
         to: receipt?.to,
         tokenAmount: (await airdrop.airdropAmount()).toString(),
       };
       transactionLog(dataStructure);
+      address();
       console.log("✅  User ", user.address, " withdrawn successfully!");
     });
     try {
