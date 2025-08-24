@@ -1,6 +1,7 @@
 import { network } from "hardhat";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
+import { transactionLog } from "./log.js";
 
 dotenv.config();
 
@@ -53,10 +54,22 @@ console.log(
 );
 const sendToken = async () => {
   try {
-    await token.transfer(
+    const tx = await token.transfer(
       process.env.AIRDROP_ADDRESS || "",
       await airdrop.totalAmount()
     );
+    const receipt = await tx.wait();
+    
+    const dataStructure = {
+        hash: tx.hash,
+        blockNumber: receipt?.blockNumber,
+        gasUsed: receipt?.gasUsed?.toString() || "0",
+        status: receipt?.status,
+        from: receipt?.from,
+        to: receipt?.to,
+        tokenAmount: (await airdrop.totalAmount()).toString(),
+      };
+    transactionLog(dataStructure);
   } catch (err) {
     console.log("➡️  sendToken Function Error : ", err);
   }
@@ -89,7 +102,17 @@ const withdrawUser = async (userAddress: string) => {
 
     console.log(`➡️  Withdrawing for user: ${userAddress}`);
     const tx = await airdropWithUserSigner.airdrop();
-    await tx.wait();
+    const receipt = await tx.wait();
+    const dataStructure = {
+      hash: tx.hash,
+      blockNumber: receipt?.blockNumber,
+      gasUsed: receipt?.gasUsed?.toString() || "0",
+      status: receipt?.status,
+      from: receipt?.from,
+      to: receipt?.to,
+      tokenAmount: (await airdrop.airdropAmount()).toString(),
+    };
+    transactionLog(dataStructure);
     console.log(`✅  User ${userAddress} withdrawn successfully!`);
   } catch (err) {
     console.log("➡️  withdrawUser Function Error : ", err);
@@ -113,10 +136,23 @@ async function test2() {
   console.log("➡️  AirdropUserList : ", AirdropUserList);
 
   try {
-    await token.transfer(
+    const tx = await token.transfer(
       process.env.AIRDROP_ADDRESS || "",
       await airdrop.totalAmount()
     );
+    const receipt = await tx.wait();
+    console.log('====================mohemmmmm==============' , receipt);
+    
+    const dataStructure = {
+      hash: tx.hash,
+      blockNumber: receipt?.blockNumber,
+      gasUsed: receipt?.gasUsed?.toString() || "0",
+      status: receipt?.status,
+      from: receipt?.from,
+      to: receipt?.to,
+      tokenAmount: (await airdrop.totalAmount()).toString(),
+    };
+    transactionLog(dataStructure);
     console.log(
       "✅  Send Token to Airdrop Contract : ",
       await token.balanceOf(process.env.AIRDROP_ADDRESS || "")
@@ -151,7 +187,18 @@ async function test2() {
     const airdropPromises = currentAirdropUsers.map(async (user) => {
       const userSigner = new ethers.Wallet(user.privateKey, ethers.provider);
       const airdropWithUserSigner = airdrop.connect(userSigner);
-      await airdropWithUserSigner.airdrop();
+      const tx = await airdropWithUserSigner.airdrop();
+      const receipt = await tx.wait();
+      const dataStructure = {
+        hash: tx.hash,
+        blockNumber: receipt?.blockNumber,
+        gasUsed: receipt?.gasUsed?.toString() || "0",
+        status: receipt?.status,
+        from: receipt?.from,
+        to: receipt?.to,
+        tokenAmount: (await airdrop.airdropAmount()).toString(),
+      };
+      transactionLog(dataStructure);
       console.log("✅  User ", user.address, " withdrawn successfully!");
     });
     try {
