@@ -9,6 +9,8 @@ interface User {
   privateKey: string;
 }
 
+const handleTest = false;
+
 const { ethers } = await network.connect({
   network: "localhost",
 });
@@ -95,11 +97,13 @@ const withdrawUser = async (userAddress: string) => {
 };
 
 // First send tokens to the airdrop contract, then add user and withdraw
-// sendToken().then(() => {
-//   addUser(usersList[3].address).then(() => {
-// withdrawUser(usersList[3].address);
-//   });
-// });
+if (handleTest) {
+  sendToken().then(() => {
+    addUser(usersList[3].address).then(() => {
+      withdrawUser(usersList[3].address);
+    });
+  });
+}
 
 // Test 2
 
@@ -142,7 +146,7 @@ async function test2() {
       }
     }
     console.log("➡️  Current Airdrop Users : ", currentAirdropUsers);
-    
+
     // Use Promise.all to handle all airdrop operations concurrently
     const airdropPromises = currentAirdropUsers.map(async (user) => {
       const userSigner = new ethers.Wallet(user.privateKey, ethers.provider);
@@ -151,11 +155,9 @@ async function test2() {
       console.log("✅  User ", user.address, " withdrawn successfully!");
     });
     try {
-        await Promise.all(airdropPromises);
-    
+      await Promise.all(airdropPromises);
     } catch (error) {
-        console.log('You are not a user of the airdrop');
-        
+      console.log("You are not a user of the airdrop");
     }
     console.log(
       "✅  All users withdrawn successfully!",
@@ -174,4 +176,6 @@ async function test2() {
     console.log("➡️  ERROR  === TEST 2 : ", err);
   }
 }
-test2();
+if (!handleTest) {
+  test2();
+}
