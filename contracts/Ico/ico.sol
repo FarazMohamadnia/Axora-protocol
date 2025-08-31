@@ -41,7 +41,7 @@ contract ICO {
     function getLatestETHPrice() public view returns (uint256) {
         (, int256 price, , , ) = priceFeed.latestRoundData();
         require(price > 0, "Invalid price from oracle");
-        return uint256(price); // قیمت به صورت 8 اعشار (مثلاً 2000 دلار = 200000000000)
+        return uint256(price); 
     }
 
     
