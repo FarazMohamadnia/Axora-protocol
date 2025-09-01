@@ -1,0 +1,18 @@
+{
+  "address": "0x093760860374b8705DBaAd29e19174D747BF1f5e",
+  "privateKey": "0x219bb573674f4b9c80db3dc30a587a889b82aff23de504f453c907e15c5b2f90",
+  "mnemonic": "negative elegant afford custom quantum rival drum nation lazy brain library bird",
+  "network": {
+    "name": "Sepolia Testnet",
+    "chainId": 11155111,
+    "rpcUrl": "https://sepolia.infura.io/v3/YOUR-PROJECT-ID",
+    "nativeCurrency": {
+      "name": "Sepolia Ether",
+      "symbol": "SEP",
+      "decimals": 18
+    },
+    "blockExplorerUrls": [
+      "https://sepolia.etherscan.io"
+    ]
+  }
+}
