@@ -9,6 +9,7 @@
     "airdrop": "npx hardhat ignition deploy ./ignition/modules/airdrop.ts --network localhost",
     "ico": "npx hardhat ignition deploy ./ignition/modules/ico.ts --network localhost",
     "staking": "npx hardhat ignition deploy ./ignition/modules/staking.ts --network localhost",
+    "usdt": "npx hardhat ignition deploy ./ignition/modules/usdt.ts --network localhost",
     "deploy": "npx hardhat ignition deploy /ignition/modules/deploy.ts --network sepolia",
     "node": "npx hardhat node "
   },
