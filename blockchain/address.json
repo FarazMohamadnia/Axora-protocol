@@ -2,141 +2,141 @@
   {
     "name": "user1",
     "address": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
-    "tokenBalance": "3000000000000000000000",
-    "ethBalance": "9999.990573730788362544",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "tokenBalance": "99999999999999999999950",
+    "ethBalance": "9999.991343473524461693",
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user2",
     "address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
     "tokenBalance": "0",
-    "ethBalance": "9999.999903359146509048",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "ethBalance": "10000.0",
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user3",
     "address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
     "tokenBalance": "0",
-    "ethBalance": "9999.999905837261265301",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "ethBalance": "10000.0",
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user4",
     "address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user5",
     "address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user6",
     "address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
-    "tokenBalance": "0",
+    "tokenBalance": "50",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user7",
     "address": "0x976ea74026e726554db657fa54763abd0c3a0aa9",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user8",
     "address": "0x14dc79964da2c08b23698b3d3cc7ca32193d9955",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user9",
     "address": "0x23618e81e3f5cdf7f54c3d65f7fbc0abf5b21e8f",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user10",
     "address": "0xa0ee7a142d267c1f36714e4a8f75612f20a79720",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user11",
     "address": "0xbcd4042de499d14e55001ccbb24a551f3b954096",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user12",
     "address": "0x71be63f3384f5fb98995898a86b02fb2426c5788",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user13",
     "address": "0xfabb0ac9d68b0b445fb7357272ff202c5651694a",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user14",
     "address": "0x1cbd3b2770909d4e10f157cabc84c7264073c9ec",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user15",
     "address": "0xdf3e18d64bc6a983f673ab319ccae4f1a57c7097",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user16",
     "address": "0xcd3b766ccdd6ae721141f452c550ca635964ce71",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user17",
     "address": "0x2546bcd3c84621e976d8185a91a922ae77ecec30",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.144Z"
   },
   {
     "name": "user18",
     "address": "0xbda5747bfd65f08deb54cb465eb87d40e51b197e",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.145Z"
   },
   {
     "name": "user19",
     "address": "0xdd2fd4581271e230360230f9337d5c0430bf44c0",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.145Z"
   },
   {
     "name": "user20",
     "address": "0x8626f6940e2eb28930efb4cef49b2d1f2c9c1199",
     "tokenBalance": "0",
     "ethBalance": "10000.0",
-    "lastUpdated": "2025-09-07T16:45:00.763Z"
+    "lastUpdated": "2025-09-22T22:24:32.145Z"
   }
 ]
