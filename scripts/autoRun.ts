@@ -135,6 +135,11 @@ export async function runAutomation() {
     await runCommand("npm", ["run", "token"]);
     console.log("✅ Token deployed successfully!\n");
 
+    // Deploy staking
+    console.log("💰 Deploying Staking contract...");
+    await runCommand("npm", ["run", "staking"]);
+    console.log("✅ Staking deployed successfully!\n");
+
     // Deploy airdrop
     console.log("🎁 Deploying Airdrop contract...");
     await runCommand("npm", ["run", "airdrop"]);
